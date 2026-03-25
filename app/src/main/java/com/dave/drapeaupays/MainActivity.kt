@@ -31,15 +31,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dave.drapeaupays.data.DataSource
+import com.dave.drapeaupays.model.Country
 import com.dave.drapeaupays.ui.theme.DrapeauPaysTheme
-
-// 1. Classe de données pour un Pays
-data class Country(
-    val name: String,
-    val capital: String,
-    val code: String,
-    val flagResource: Int
-)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +42,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             DrapeauPaysTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    // Utilisation de la source de données
+                    val countries = DataSource().loadCountries()
                     CountryList(
-                        countries = getCountries(),
+                        countries = countries,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -58,7 +54,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// 2. Composant pour un élément de la liste (CountryItem)
+// Composant pour un élément de la liste
 @Composable
 fun CountryItem(country: Country) {
     Card(
@@ -74,7 +70,6 @@ fun CountryItem(country: Country) {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Image du drapeau à gauche
             Image(
                 painter = painterResource(id = country.flagResource),
                 contentDescription = "Drapeau de ${country.name}",
@@ -86,7 +81,6 @@ fun CountryItem(country: Country) {
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Textes à droite
             Column {
                 Text(
                     text = country.name,
@@ -107,7 +101,7 @@ fun CountryItem(country: Country) {
     }
 }
 
-// 3. Composant pour la liste défilable (LazyColumn)
+// Composant pour la liste défilable
 @Composable
 fun CountryList(countries: List<Country>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
@@ -117,26 +111,11 @@ fun CountryList(countries: List<Country>, modifier: Modifier = Modifier) {
     }
 }
 
-// Liste de données (plus de 5 pays avec vos images)
-fun getCountries(): List<Country> {
-    return listOf(
-        Country("République démocratique du Congo", "Kinshasa", "CD", R.drawable.congo_drc),
-        Country("France", "Paris", "FR", R.drawable.france),
-        Country("Canada", "Ottawa", "CA", R.drawable.canada),
-        Country("États-Unis", "Washington D.C.", "US", R.drawable.usa),
-        Country("Espagne", "Madrid", "ES", R.drawable.espagne),
-        Country("Chili", "Santiago", "CL", R.drawable.chili),
-        Country("Népal", "Katmandou", "NP", R.drawable.nepal),
-        Country("Venezuela", "Caracas", "VE", R.drawable.venezuela),
-        Country("Royaume-Uni", "Londres", "GB", R.drawable.britanique)
-    )
-}
-
-// 4. Prévisualisation de l'interface
+// Prévisualisation de l'interface
 @Preview(showBackground = true)
 @Composable
 fun PreviewCountryList() {
     DrapeauPaysTheme {
-        CountryList(countries = getCountries())
+        CountryList(countries = DataSource().loadCountries())
     }
 }
