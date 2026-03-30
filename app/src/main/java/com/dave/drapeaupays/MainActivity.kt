@@ -21,6 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dave.drapeaupays.data.DataSource
@@ -48,7 +51,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DrapeauPaysTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        CountryTopAppBar()
+                    }
+                ) { innerPadding ->
                     CountryList(
                         countries = DataSource().loadCountries(),
                         modifier = Modifier.padding(innerPadding)
@@ -57,6 +65,35 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+/**
+ * Composant TopAppBar avec le logo XML et le titre "M'bokas"
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CountryTopAppBar(modifier: Modifier = Modifier) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Utilisation du logo XML (logo.xml)
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(100.dp) // Taille importante, plus grand que le titre
+                        .padding(8.dp)
+                )
+                Text(
+                    text = "M'bokas",
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        },
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -92,7 +129,11 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CountryIcon(country.flagResource)
-                CountryInformation(country.name)
+                CountryInformation(
+                    countryName = country.name,
+                    capital = country.capital,
+                    code = country.code
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 CountryItemButton(
                     expanded = expanded,
@@ -128,11 +169,22 @@ fun CountryIcon(flagResourceId: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CountryInformation(countryName: String, modifier: Modifier = Modifier) {
+fun CountryInformation(
+    countryName: String,
+    capital: String,
+    code: String,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
         Text(
             text = countryName,
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "$capital / $code",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -176,6 +228,13 @@ fun CountryDescription(
 @Composable
 fun PreviewCountryApp() {
     DrapeauPaysTheme {
-        CountryList(countries = DataSource().loadCountries())
+        Scaffold(
+            topBar = { CountryTopAppBar() }
+        ) { innerPadding ->
+            CountryList(
+                countries = DataSource().loadCountries(),
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }
