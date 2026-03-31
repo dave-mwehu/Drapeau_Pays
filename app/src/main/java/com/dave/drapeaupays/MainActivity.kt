@@ -39,10 +39,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dave.drapeaupays.data.DataSource
 import com.dave.drapeaupays.model.Country
+import com.dave.drapeaupays.ui.navigation.NavigationGraph
 import com.dave.drapeaupays.ui.theme.DrapeauPaysTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,17 +50,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DrapeauPaysTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        CountryTopAppBar()
-                    }
-                ) { innerPadding ->
-                    CountryList(
-                        countries = DataSource().loadCountries(),
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                NavigationGraph()
             }
         }
     }
@@ -221,20 +210,5 @@ fun CountryDescription(
             text = countryDescription,
             style = MaterialTheme.typography.bodyLarge
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCountryApp() {
-    DrapeauPaysTheme {
-        Scaffold(
-            topBar = { CountryTopAppBar() }
-        ) { innerPadding ->
-            CountryList(
-                countries = DataSource().loadCountries(),
-                modifier = Modifier.padding(innerPadding)
-            )
-        }
     }
 }
