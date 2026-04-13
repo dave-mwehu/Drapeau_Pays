@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.dave.drapeaupays.model.Country
 import com.dave.drapeaupays.ui.navigation.NavigationGraph
 import com.dave.drapeaupays.ui.theme.DrapeauPaysTheme
@@ -117,10 +118,10 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
                     .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CountryIcon(country.flagResource)
+                CountryIcon(country.flagUrl)
                 CountryInformation(
-                    countryName = country.name,
-                    capital = country.capital,
+                    countryName = country.commonName,
+                    capital = country.mainCapital,
                     code = country.code
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -131,7 +132,7 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
             }
             if (expanded) {
                 CountryDescription(
-                    countryDescription = country.description,
+                    countryRegion = country.region,
                     modifier = Modifier.padding(
                         start = 16.dp,
                         top = 8.dp,
@@ -145,15 +146,15 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CountryIcon(flagResourceId: Int, modifier: Modifier = Modifier) {
-    Image(
+fun CountryIcon(flagUrl: String, modifier: Modifier = Modifier) {
+    AsyncImage(
+        model = flagUrl,
+        contentDescription = null,
         modifier = modifier
             .size(64.dp)
             .padding(8.dp)
             .clip(MaterialTheme.shapes.small),
-        contentScale = ContentScale.Crop,
-        painter = painterResource(flagResourceId),
-        contentDescription = null
+        contentScale = ContentScale.Crop
     )
 }
 
@@ -198,7 +199,7 @@ fun CountryItemButton(
 
 @Composable
 fun CountryDescription(
-    countryDescription: String,
+    countryRegion: String,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -207,7 +208,7 @@ fun CountryDescription(
             style = MaterialTheme.typography.labelLarge
         )
         Text(
-            text = countryDescription,
+            text = "Ce pays fait partie de la région : $countryRegion",
             style = MaterialTheme.typography.bodyLarge
         )
     }

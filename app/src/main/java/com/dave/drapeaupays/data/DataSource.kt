@@ -1,20 +1,75 @@
 package com.dave.drapeaupays.data
 
-import com.dave.drapeaupays.R
 import com.dave.drapeaupays.model.Country
+import com.dave.drapeaupays.model.FlagsData
+import com.dave.drapeaupays.model.NameData
 
 class DataSource {
     fun loadCountries(): List<Country> {
         return listOf(
-            Country("RDC", "Kinshasa", "CD", R.drawable.congo_drc, "Située en Afrique centrale, elle est connue pour sa forêt équatoriale et son fleuve Congo."),
-            Country("France", "Paris", "FR", R.drawable.france, "Célèbre pour sa culture, sa gastronomie, sa mode et sa tour Eiffel à Paris."),
-            Country("Canada", "Ottawa", "CA", R.drawable.canada, "Le deuxième plus grand pays du monde, connu pour son sirop d'érable et ses paysages naturels."),
-            Country("USA", "Washington", "US", R.drawable.usa, "Une puissance mondiale avec une grande diversité culturelle et géographique."),
-            Country("Espagne", "Madrid", "ES", R.drawable.espagne, "Connue pour ses plages, sa cuisine savoureuse et son architecture unique."),
-            Country("Chili", "Santiago", "CL", R.drawable.chili, "Pays d'Amérique du Sud tout en longueur, célèbre pour ses montagnes et ses déserts."),
-            Country("Népal", "Katmandou", "NP", R.drawable.nepal, "Abrite le mont Everest, le point le plus haut de la Terre."),
-            Country("Venezuela", "Caracas", "VE", R.drawable.venezuela, "Réputé pour ses chutes d'eau spectaculaires comme le Salto Ángel."),
-            Country("Royaume-Uni", "Londres", "GB", R.drawable.britanique, "Constitué de quatre nations : Angleterre, Écosse, Pays de Galles et Irlande du Nord.")
+            Country(
+                nameData = NameData("RDC"),
+                capital = listOf("Kinshasa"),
+                code = "CD",
+                flags = FlagsData("https://flagcdn.com/w320/cd.png"),
+                region = "Afrique"
+            ),
+            Country(
+                nameData = NameData("France"),
+                capital = listOf("Paris"),
+                code = "FR",
+                flags = FlagsData("https://flagcdn.com/w320/fr.png"),
+                region = "Europe"
+            ),
+            Country(
+                nameData = NameData("Canada"),
+                capital = listOf("Ottawa"),
+                code = "CA",
+                flags = FlagsData("https://flagcdn.com/w320/ca.png"),
+                region = "Amériques"
+            ),
+            Country(
+                nameData = NameData("USA"),
+                capital = listOf("Washington"),
+                code = "US",
+                flags = FlagsData("https://flagcdn.com/w320/us.png"),
+                region = "Amériques"
+            ),
+            Country(
+                nameData = NameData("Espagne"),
+                capital = listOf("Madrid"),
+                code = "ES",
+                flags = FlagsData("https://flagcdn.com/w320/es.png"),
+                region = "Europe"
+            ),
+            Country(
+                nameData = NameData("Chili"),
+                capital = listOf("Santiago"),
+                code = "CL",
+                flags = FlagsData("https://flagcdn.com/w320/cl.png"),
+                region = "Amériques"
+            ),
+            Country(
+                nameData = NameData("Népal"),
+                capital = listOf("Katmandou"),
+                code = "NP",
+                flags = FlagsData("https://flagcdn.com/w320/np.png"),
+                region = "Asie"
+            ),
+            Country(
+                nameData = NameData("Venezuela"),
+                capital = listOf("Caracas"),
+                code = "VE",
+                flags = FlagsData("https://flagcdn.com/w320/ve.png"),
+                region = "Amériques"
+            ),
+            Country(
+                nameData = NameData("Royaume-Uni"),
+                capital = listOf("Londres"),
+                code = "GB",
+                flags = FlagsData("https://flagcdn.com/w320/gb.png"),
+                region = "Europe"
+            )
         )
     }
 }

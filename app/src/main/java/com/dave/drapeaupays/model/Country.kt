@@ -1,14 +1,26 @@
 package com.dave.drapeaupays.model
 
-import androidx.annotation.DrawableRes
+import com.google.gson.annotations.SerializedName
 
 /**
- * Modèle de données complet pour un Pays.
+ * Modèle de données pour l'API RestCountries.
  */
 data class Country(
-    val name: String,
-    val capital: String,
-    val code: String,
-    @DrawableRes val flagResource: Int,
-    val description: String
+    @SerializedName("name") val nameData: NameData,
+    @SerializedName("capital") val capital: List<String>?,
+    @SerializedName("cca2") val code: String,
+    @SerializedName("flags") val flags: FlagsData,
+    @SerializedName("region") val region: String
+) {
+    val commonName: String get() = nameData.common
+    val mainCapital: String get() = capital?.firstOrNull() ?: "N/A"
+    val flagUrl: String get() = flags.png
+}
+
+data class NameData(
+    @SerializedName("common") val common: String
+)
+
+data class FlagsData(
+    @SerializedName("png") val png: String
 )

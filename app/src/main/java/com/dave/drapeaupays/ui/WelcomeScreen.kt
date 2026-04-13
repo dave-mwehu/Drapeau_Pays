@@ -2,7 +2,9 @@ package com.dave.drapeaupays.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,16 +38,33 @@ fun WelcomeScreen(navController: NavHostController) {
         )
         
         Button(
-            onClick = { navController.navigate("country_list") },
+            onClick = { navController.navigate("country_list/all") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(16.dp),
-            modifier = Modifier.width(200.dp)
+            modifier = Modifier.width(250.dp)
         ) {
             Text(
-                text = "voir les pays",
+                text = "voir tous les pays",
+                style = MaterialTheme.typography.labelLarge
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("country_list/africa") },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+                contentColor = Color.White
+            ),
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.width(250.dp)
+        ) {
+            Text(
+                text = "pays d'afrique",
                 style = MaterialTheme.typography.labelLarge
             )
         }

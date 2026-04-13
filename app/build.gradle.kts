@@ -46,7 +46,14 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
     
-    // Ajout de la bibliothèque d'icônes étendues pour ExpandMore et ExpandLess
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    
+    // Image loading
+    implementation(libs.coil.compose)
+    
+    // Icons
     implementation("androidx.compose.material:material-icons-extended")
 
     testImplementation(libs.junit)
